@@ -21,7 +21,10 @@ byte stream_id[4] = {0x00, 0x00, 0x08, 0x00};
 byte class_id[8] = {0x00, 0x00, 0x1C, 0x2D, 0x53, 0x4C, 0xFF, 0xFF};
 byte timestamp_int[4] = {0x65, 0x56, 0x3F,0xBF};
 byte timestamp_frac[8] = {0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-
+/*
+char payload[PAYLOAD_SIZE] = "discovery_protocol_version=3.0.0.2 model=FLEX-6400 serial=2019-2544-6400-6026 version=3.5.9.22963 nickname=Locale callsign=I8NHJ
+ip=67.198.99.60 port=4992 status=Available inuse_ip= inuse_host= max_licensed_version=v3 radio_license_id=00-1C-2D-05-11-10 requires_additional_license=0 fpc_mac= wan_connected=1 licensed_clients=2 available_clients=2 max_panadapters=2 available_panadapters=2 max_slices=2 available_slices=2 gui_client_ips= gui_client_hosts= gui_client_programs= gui_client_stations= gui_client_handles= ";
+*/
 char ST0_payload_protocol_version[] = "discovery_protocol_version=3.0.0.2 ";
 char ST0_payload_model[] = "model=FLEX-6400 ";
 char ST0_payload_serial[] = "serial=2019-2544-6400-6026 ";
@@ -161,3 +164,4 @@ void loop() {
   Udp.endPacket();
   delay(1000);
 }
+
