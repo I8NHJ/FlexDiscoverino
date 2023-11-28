@@ -13,7 +13,7 @@ IPAddress ArduinoIP(192,168,1,213);
 IPAddress Brodcast (255,255,255,255);
 unsigned int DiscoveryPort = 4992;      // local port to listen on
 
-int connectedPin = 10;
+int connectedPin = 11;
 
 // Protocol Definition
 byte header[4] ={0x38, 0x57, 0x00, 0x88};
@@ -21,15 +21,12 @@ byte stream_id[4] = {0x00, 0x00, 0x08, 0x00};
 byte class_id[8] = {0x00, 0x00, 0x1C, 0x2D, 0x53, 0x4C, 0xFF, 0xFF};
 byte timestamp_int[4] = {0x65, 0x56, 0x3F,0xBF};
 byte timestamp_frac[8] = {0x00, 0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-/*
-char payload[PAYLOAD_SIZE] = "discovery_protocol_version=3.0.0.2 model=FLEX-6400 serial=2019-2544-6400-6026 version=3.5.9.22963 nickname=Locale callsign=I8NHJ
-ip=67.198.99.60 port=4992 status=Available inuse_ip= inuse_host= max_licensed_version=v3 radio_license_id=00-1C-2D-05-11-10 requires_additional_license=0 fpc_mac= wan_connected=1 licensed_clients=2 available_clients=2 max_panadapters=2 available_panadapters=2 max_slices=2 available_slices=2 gui_client_ips= gui_client_hosts= gui_client_programs= gui_client_stations= gui_client_handles= ";
-*/
+
 char ST0_payload_protocol_version[] = "discovery_protocol_version=3.0.0.2 ";
 char ST0_payload_model[] = "model=FLEX-6400 ";
 char ST0_payload_serial[] = "serial=2019-2544-6400-6026 ";
 char ST0_payload_version[] = "version=3.5.9.22963 ";
-char ST0_payload_nick[] = "nickname=Frisco callsign=N5NHJ ";
+char ST0_payload_nick[] = "nickname=Fresco callsign=I8NHJ ";
 char ST0_payload_ip[] = "ip=67.198.99.60 port=4992 ";
 char ST0_payload_status[] = "status=Available ";
 char ST0_payload_inuse_ip[] = "inuse_ip= ";
@@ -56,8 +53,8 @@ char ST1_payload_version[] = "version=3.5.9.22963 ";
 char ST1_payload_nick[] = "nickname=Frisco callsign=N5NHJ ";
 char ST1_payload_ip[] = "ip=67.198.99.60 port=4992 ";
 char ST1_payload_status[] = "status=Available ";
-char ST1_payload_inuse_ip[] = "inuse_ip= XXX.YYY.WWW.ZZZ ";
-char ST1_payload_inuse_host[] = "inuse_host= XXX.YYY.WWW.ZZZ ";
+char ST1_payload_inuse_ip[] = "inuse_ip= 99.125.15.2 ";
+char ST1_payload_inuse_host[] = "inuse_host= 99.125.15.2 ";
 char ST1_payload_max_license[] = "max_licensed_version=v3 radio_license_id=00-1C-2D-05-11-10 requires_additional_license=0 ";
 char ST1_payload_fpc_mac[] = "fpc_mac= ";
 char ST1_payload_wan_connected[] = "wan_connected=1 ";
@@ -67,10 +64,10 @@ char ST1_payload_max_panadapters[] = "max_panadapters=2 ";
 char ST1_payload_available_panadapters[] = "available_panadapters=1 ";
 char ST1_payload_max_slices[] = "max_slices=2 ";
 char ST1_payload_available_slices[] = "available_slices=1 ";
-char ST1_payload_gui_client_ips[] = "gui_client_ips=XXX.YYY.WWW.ZZZ ";
-char ST1_payload_gui_client_hosts[] = "gui_client_hosts=XXX.YYY.WWW.ZZZ ";
+char ST1_payload_gui_client_ips[] = "gui_client_ips=99.127.15.2 ";
+char ST1_payload_gui_client_hosts[] = "gui_client_hosts=99.127.15.2 ";
 char ST1_payload_gui_client_programs[] = "gui_client_programs=SmartSDR-Win ";
-char ST1_payload_gui_client_stations[] = "gui_client_stations=MAC-N5NHJ-WIN ";
+char ST1_payload_gui_client_stations[] = "gui_client_stations=PC-N5NHJ ";
 char ST1_payload_gui_client_handles[] = "gui_client_handles= 0x3602E5F5";
 
 // An EthernetUDP instance to let us send and receive packets over UDP
@@ -134,6 +131,7 @@ void loop() {
     Udp.write(ST1_payload_gui_client_programs,    sizeof(ST1_payload_gui_client_programs));
     Udp.write(ST1_payload_gui_client_stations,    sizeof(ST1_payload_gui_client_stations));
     Udp.write(ST1_payload_gui_client_handles,     sizeof(ST1_payload_gui_client_handles));
+    Serial.println("Connected Sent.");
   }
   else {
     Udp.write(ST0_payload_protocol_version,       sizeof(ST0_payload_protocol_version));
@@ -159,8 +157,8 @@ void loop() {
     Udp.write(ST0_payload_gui_client_programs,    sizeof(ST0_payload_gui_client_programs));
     Udp.write(ST0_payload_gui_client_stations,    sizeof(ST0_payload_gui_client_stations));
     Udp.write(ST0_payload_gui_client_handles,     sizeof(ST0_payload_gui_client_handles));
+    Serial.println("Discovery Sent.");
   }
-  Serial.println("Discovery Sent.");
   Udp.endPacket();
   delay(1000);
 }
